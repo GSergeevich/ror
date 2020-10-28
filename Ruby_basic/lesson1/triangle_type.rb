@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+
 puts 'Введите три стороны треугольника - a,b,c:'
 sides = Array.new(gets.chomp.split(','))
 a,b,c = *sides
