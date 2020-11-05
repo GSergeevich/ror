@@ -2,5 +2,5 @@
 
 vowels = %w[a e i o u]
 hash = {}
-('a'..'z').each_with_index {|letter,i| hash[letter] = i + 1 if vowels.include? letter}
+('a'..'z').each.with_index(1) { |letter, i| hash[letter] = i if vowels.include? letter }
 p hash
