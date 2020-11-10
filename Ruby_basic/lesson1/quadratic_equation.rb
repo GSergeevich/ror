@@ -16,4 +16,3 @@ elsif disc.zero?
 else 
   puts "Корней нет"
 end
-  	

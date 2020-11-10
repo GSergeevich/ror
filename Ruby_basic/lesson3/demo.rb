@@ -1,6 +1,8 @@
 # /usr/bin/env ruby
 
-require_relative 'railroad'
+require_relative 'station'
+require_relative 'route'
+require_relative 'train'
 
 station1 = Station.new('Lud')
 station2 = Station.new('Candleton')
@@ -62,12 +64,19 @@ puts "Вагонов: #{blaine_the_mono.carriages}"
 
 puts "Приехали на следующую станцию: #{blaine_the_mono.forward}"
 puts '---'
-puts "Предыдущая,текущая и следующая станции: #{blaine_the_mono.near_stations}"
+puts 'Станции:'
+puts <<~EOM
+     предыдущая: #{blaine_the_mono.prev_station.title},
+     текущая: #{blaine_the_mono.current_station.title},
+     следующая: #{blaine_the_mono.next_station.title}.
+EOM
 puts '---'
 puts "Приехали на следующую станцию: #{blaine_the_mono.forward}"
 puts '-----'
 puts "Приехали на следующую станцию: #{blaine_the_mono.forward}"
 puts '-----'
+puts "На станции #{blaine_the_mono.current_station.title} :"
+puts "#{blaine_the_mono.current_station.trains_number}"
 
 puts 'Сброс скорости'
 puts "#{blaine_the_mono.speed} => #{blaine_the_mono.speed = 0}"
