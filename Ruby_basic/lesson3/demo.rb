@@ -3,6 +3,7 @@
 require_relative 'station'
 require_relative 'route'
 require_relative 'train'
+require 'pry'
 
 station1 = Station.new('Lud')
 station2 = Station.new('Candleton')
@@ -39,6 +40,16 @@ p blaine_the_mono.number
 puts '---'
 puts "Принимаем маршрут: #{blaine_the_mono.route(r1)}"
 
+puts "Поехали на предыдущую станцию: #{blaine_the_mono.backward}"
+puts '---'
+
+puts 'Станции:'
+puts <<~EOM
+     предыдущая: #{blaine_the_mono.prev_station ? blaine_the_mono.prev_station.title : '-' },
+     текущая: #{blaine_the_mono.current_station ? blaine_the_mono.current_station.title : '-' },
+     следующая: #{blaine_the_mono.next_station.title ? blaine_the_mono.next_station.title : '-' }.
+EOM
+puts '---'
 puts '---'
 puts 'Играем с вагонами:'
 
@@ -62,18 +73,18 @@ puts "Вагонов: #{blaine_the_mono.carriages}"
 puts "Отцепили вагон: #{blaine_the_mono.detach}"
 puts "Вагонов: #{blaine_the_mono.carriages}"
 
-puts "Приехали на следующую станцию: #{blaine_the_mono.forward}"
+puts "Поехали на следующую станцию: #{blaine_the_mono.forward}"
 puts '---'
 puts 'Станции:'
 puts <<~EOM
-     предыдущая: #{blaine_the_mono.prev_station.title},
-     текущая: #{blaine_the_mono.current_station.title},
-     следующая: #{blaine_the_mono.next_station.title}.
+     предыдущая: #{blaine_the_mono.prev_station ? blaine_the_mono.prev_station.title : '-' },
+     текущая: #{blaine_the_mono.current_station ? blaine_the_mono.current_station.title : '-' },
+     следующая: #{blaine_the_mono.next_station.title ? blaine_the_mono.next_station.title : '-' }.
 EOM
 puts '---'
-puts "Приехали на следующую станцию: #{blaine_the_mono.forward}"
+puts "Поехали на следующую станцию: #{blaine_the_mono.forward}"
 puts '-----'
-puts "Приехали на следующую станцию: #{blaine_the_mono.forward}"
+puts "Поехали на следующую станцию: #{blaine_the_mono.forward}"
 puts '-----'
 puts "На станции #{blaine_the_mono.current_station.title} :"
 puts "#{blaine_the_mono.current_station.trains_number}"
@@ -86,11 +97,23 @@ puts 'Набор скорости'
 puts "#{blaine_the_mono.speed} => #{blaine_the_mono.speed = 1225}"
 puts '-----'
 
-puts "Приехали на следующую станцию: #{blaine_the_mono.forward}"
+puts "Поехали на следующую станцию: #{blaine_the_mono.forward}"
 puts '-----'
 
 puts 'Набор скорости'
 puts "#{blaine_the_mono.speed = 1500} => #{blaine_the_mono.speed = 1700}"
 puts 'Сброс скорости'
+
 puts "#{blaine_the_mono.speed} => #{blaine_the_mono.speed = 0}"
+
+puts "Поехали на следующую станцию: #{blaine_the_mono.forward}"
+puts '-----'
+puts 'Станции:'
+puts <<~EOM
+     предыдущая: #{blaine_the_mono.prev_station ? blaine_the_mono.prev_station.title : '-' },
+     текущая: #{blaine_the_mono.current_station ? blaine_the_mono.current_station.title : '-' },
+     следующая: #{blaine_the_mono.next_station ? blaine_the_mono.next_station.title : '-' }.
+EOM
+puts '---'
+
 puts 'Приехали'

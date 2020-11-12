@@ -26,24 +26,42 @@ class Train
     @route.stations.map(&:title)
   end
 
+  def first_on_route?(station)
+    @route.stations.first == station
+  end
+
+  def last_on_route?(station)
+    @route.stations.last == station
+  end
+  
   def forward
-    @current_station.send(self)
-    @current_station = next_station.receive(self)
-    @current_station.title
+    if last_on_route?(@current_station)
+      "станция #{@current_station.title } последняя на маршруте"
+    else  
+      @current_station.send(self)
+      @current_station = next_station.receive(self)
+      @current_station.title
+    end
   end
 
   def backward
-    @current_station.send(self)
-    @current_station = prev_station.recieve(self)
-    @current_station.title
+    if first_on_route?(@current_station)
+      "станция #{@current_station.title } первая на маршруте"
+    else  
+      @current_station.send(self)
+      @current_station = prev_station.recieve(self)
+      @current_station.title
+    end
   end
 
   def next_station
+    return nil if last_on_route?(@current_station)
     index = @route.stations.index(@current_station)
     @route.stations[index + 1]
   end
 
   def prev_station
+    return nil if first_on_route?(@current_station)
     index = @route.stations.index(@current_station)
     @route.stations[index - 1]
   end
