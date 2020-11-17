@@ -45,9 +45,9 @@ puts '---'
 
 puts 'Станции:'
 puts <<~EOM
-     предыдущая: #{blaine_the_mono.prev_station ? blaine_the_mono.prev_station.title : '-' },
-     текущая: #{blaine_the_mono.current_station ? blaine_the_mono.current_station.title : '-' },
-     следующая: #{blaine_the_mono.next_station.title ? blaine_the_mono.next_station.title : '-' }.
+  предыдущая: #{blaine_the_mono.prev_station ? blaine_the_mono.prev_station.title : '-'},
+  текущая: #{blaine_the_mono.current_station ? blaine_the_mono.current_station.title : '-'},
+  следующая: #{blaine_the_mono.next_station.title || '-'}.
 EOM
 puts '---'
 puts '---'
@@ -77,9 +77,9 @@ puts "Поехали на следующую станцию: #{blaine_the_mono.f
 puts '---'
 puts 'Станции:'
 puts <<~EOM
-     предыдущая: #{blaine_the_mono.prev_station ? blaine_the_mono.prev_station.title : '-' },
-     текущая: #{blaine_the_mono.current_station ? blaine_the_mono.current_station.title : '-' },
-     следующая: #{blaine_the_mono.next_station.title ? blaine_the_mono.next_station.title : '-' }.
+  предыдущая: #{blaine_the_mono.prev_station ? blaine_the_mono.prev_station.title : '-'},
+  текущая: #{blaine_the_mono.current_station ? blaine_the_mono.current_station.title : '-'},
+  следующая: #{blaine_the_mono.next_station.title || '-'}.
 EOM
 puts '---'
 puts "Поехали на следующую станцию: #{blaine_the_mono.forward}"
@@ -87,7 +87,7 @@ puts '-----'
 puts "Поехали на следующую станцию: #{blaine_the_mono.forward}"
 puts '-----'
 puts "На станции #{blaine_the_mono.current_station.title} :"
-puts "#{blaine_the_mono.current_station.trains_number}"
+puts blaine_the_mono.current_station.trains_number.to_s
 
 puts 'Сброс скорости'
 puts "#{blaine_the_mono.speed} => #{blaine_the_mono.speed = 0}"
@@ -110,9 +110,9 @@ puts "Поехали на следующую станцию: #{blaine_the_mono.f
 puts '-----'
 puts 'Станции:'
 puts <<~EOM
-     предыдущая: #{blaine_the_mono.prev_station ? blaine_the_mono.prev_station.title : '-' },
-     текущая: #{blaine_the_mono.current_station ? blaine_the_mono.current_station.title : '-' },
-     следующая: #{blaine_the_mono.next_station ? blaine_the_mono.next_station.title : '-' }.
+  предыдущая: #{blaine_the_mono.prev_station ? blaine_the_mono.prev_station.title : '-'},
+  текущая: #{blaine_the_mono.current_station ? blaine_the_mono.current_station.title : '-'},
+  следующая: #{blaine_the_mono.next_station ? blaine_the_mono.next_station.title : '-'}.
 EOM
 puts '---'
 

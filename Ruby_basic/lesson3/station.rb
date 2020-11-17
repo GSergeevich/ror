@@ -16,7 +16,7 @@ class Station
   end
 
   def trains
-    @depot.each { |type, trains| puts trains }
+    @depot.each { |_type, trains| puts trains }
   end
 
   def trains_number
