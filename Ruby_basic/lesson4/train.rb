@@ -1,6 +1,6 @@
 class Train
   attr_accessor :speed, :current_station
-  attr_reader :number, :type
+  attr_reader :number, :type, :route
 
   def initialize(number)
     @number = number.to_s
@@ -9,15 +9,14 @@ class Train
   end
 
   def detach
-    @carriages.pop.attached = false if @speed.zero? && @carriages.length > 0 
+    @carriages.pop.attached = false if @speed.zero? && @carriages.length.positive? 
   end
 
   def attach(carriage)
-    @carriages << carriage if @speed.zero?  && carriage.type == self.type && !carriage.attached
-    carriage.attached = true
+    @speed.zero?  && carriage.type == self.type && !carriage.attached ? @carriages << carriage && carriage.attached = true : false 
   end
 
-  def route(route)
+  def route!(route)
     @route = route
     @current_station = @route.stations[0]
     @current_station.receive(self)
@@ -26,7 +25,7 @@ class Train
 
   def forward
     if last_on_route?(@current_station)
-      "станция #{@current_station.title} последняя на маршруте"
+      "#{@current_station.title} последняя на маршруте"
     else
       @current_station.send(self)
       @current_station = next_station.receive(self)
@@ -36,7 +35,7 @@ class Train
 
   def backward
     if first_on_route?(@current_station)
-      "станция #{@current_station.title} первая на маршруте"
+      "#{@current_station.title} первая на маршруте"
     else
       @current_station.send(self)
       @current_station = prev_station.receive(self)

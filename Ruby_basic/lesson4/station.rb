@@ -7,8 +7,6 @@ class Station
   end
 
   def receive(train)
-    p train
-    p train.type
     @depot[train.type.to_sym] << train
     self
   end

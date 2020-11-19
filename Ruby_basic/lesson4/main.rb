@@ -11,7 +11,7 @@ def create(item)
     when '1'
       puts 'Введите название станции:'
       title = gets.chomp 
-      @stations[title] = Station.new(title)
+      puts @stations[title] ?  "Станция #{title} уже существует" : "Станция " + (@stations[title] = Station.new(title)).title + " создана."
 
     when '2'
       puts 'Введите номер поезда:'
@@ -24,9 +24,9 @@ def create(item)
 	  type = gets.chomp 
 	  case type
 	    when '1'
-	      @trains[number] = PassTrain.new(number)
+	     puts @trains[number] ? "Поезд номер #{number} уже существует." : "Поезд " + (@trains[number] = PassTrain.new(number)).number + " создан."
 	    when '2'
-	      @trains[number] = CargoTrain.new(number)
+	     puts @trains[number] ? "Поезд номер #{number} уже существует." : "Поезд " + (@trains[number] = CargoTrain.new(number)).number + " создан."
 	  end
 	
 	when '3'
@@ -36,7 +36,7 @@ def create(item)
 	  first = @stations[gets.chomp]
 	  puts 'Введите конечную станцию маршрута:'
 	  last = @stations[gets.chomp]
-  	  @routes[title] = Route.new(first,last)
+  	  puts @routes[title] ? "Маршрут #{title} уже существует." : "Маршрут " + (@routes[title] = Route.new(first,last)).title + " создан."
   end
 end
 
@@ -77,11 +77,10 @@ when '2'
   puts 'Введите название маршрута:'
   route = @routes[gets.chomp]
   if route.stations.include? station 
-    puts "#{station.title} будет удалена из маршрута"
-    route.delete(station)
+    puts route.delete(station) ? "#{station.title} удалена из маршрута" :  "#{station.title} является терминальной станцией маршрута,удаление невозможно"
+ 
   else 
-    puts "#{station.title} будет добавлена в маршрут"
-    route.insert(station) 
+    puts route.insert(station) ? "#{station.title} добавлена в маршрут" : "Что-то пошло не так.Убедитесь в корректности ввода"
   end
 
 when '3'   	  
@@ -89,7 +88,7 @@ when '3'
   train = @trains[gets.chomp]
   puts 'Введите название маршрута:'
   route = @routes[gets.chomp]
-  train.route(route)
+  puts train && route ? "Поезду #{train} присвоен маршрут: #{train.route!(route)}" : 'Что-то пошло не так.Убедитесь в корректности ввода'
 
 when '4'
   puts 'Введите номер поезда'
@@ -101,7 +100,7 @@ when '4'
   EOM
   input = gets.chomp
   case input
-    when '1'
+  when '1'
       puts <<~EOM
         Введите тип вагона: 
 	    1)пассажирский
@@ -110,14 +109,14 @@ when '4'
 	  input = gets.chomp
 	  case input
 	  when '1'
-        train.attach(PassCarriage.new)
+      puts train.attach(PassCarriage.new) ? 'Вагон прицеплен' : 'Операция не выполнена.Проверьте корректность ввода'
 	  when '2'
-        train.attach(CargoCarriage.new)
+      puts train.attach(CargoCarriage.new) ? 'Вагон прицеплен' : 'Операция не выполнена.Проверьте корректность ввода'
 	  end
 	
 	when '2'
-      train.detach
-    end
+      puts train.detach ? 'Вагон отцеплен' : 'Операция не выполнена.Проверьте корректность ввода'
+  end
 
 when '5'
   puts 'Введите номер поезда'
@@ -130,9 +129,9 @@ when '5'
   input = gets.chomp
   case input
     when '1'
-      train.forward	
+      puts train.route ? "Станция #{train.forward}" : "Поезду не назначен маршрут"	
 	when '2'
-      train.backward
+      puts train.route ? "Станция #{train.backward}" : "Поезду не назначен маршрут" 
   end
 	 
 when '6'
@@ -140,7 +139,8 @@ when '6'
 
 when '7'
 	puts 'Введите название станции:'
-	@stations[gets.chomp].trains
+  station = @stations[gets.chomp]
+	puts station ? station.trains : "Станции не существует"
 
 when '8'
 	break
