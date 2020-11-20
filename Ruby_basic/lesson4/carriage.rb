@@ -1,3 +1,3 @@
 class Carriage
-	attr_accessor :attached
+  attr_accessor :attached
 end

@@ -16,7 +16,10 @@ class Station
   end
 
   def trains
-    @depot.each { |_type, trains| puts trains }
+    arr = []
+    @depot[:cargo].each { |train| arr << train.number.to_s }
+    @depot[:pass].each { |train| arr << train.number.to_s }
+    arr
   end
 
   def trains_number

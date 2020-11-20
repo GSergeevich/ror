@@ -9,11 +9,11 @@ class Train
   end
 
   def detach
-    @carriages.pop.attached = false if @speed.zero? && @carriages.length.positive? 
+    @carriages.pop.attached = false if @speed.zero? && @carriages.length.positive?
   end
 
   def attach(carriage)
-    @speed.zero?  && carriage.type == self.type && !carriage.attached ? @carriages << carriage && carriage.attached = true : false 
+    @speed.zero? && carriage.type == type && !carriage.attached ? @carriages << carriage && carriage.attached = true : false
   end
 
   def route!(route)
@@ -58,7 +58,7 @@ class Train
   end
 end
 
-private 
+private
 
 # Вынес в private потому что эти методы не используются непосредственно в текстовом интерфейсе программы.
 def first_on_route?(station)
