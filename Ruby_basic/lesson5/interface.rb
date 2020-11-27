@@ -69,7 +69,7 @@ class Interface
     when '2'
       puts 'Введите номер поезда:'
       number = gets.chomp
-      if @trains[number]
+      if Train.find(number)
         puts "Поезд номер #{number} уже существует."
       else
         puts <<~EOM
@@ -80,9 +80,9 @@ class Interface
         type = gets.chomp
         case type
         when '1'
-          puts "Поезд #{(@trains[number] = PassTrain.new(number)).number} создан."
+          puts "Поезд #{PassTrain.new(number).number} создан."
         when '2'
-          puts "Поезд #{(@trains[number] = CargoTrain.new(number)).number} создан."
+          puts "Поезд #{CargoTrain.new(number).number} создан."
         end
       end
 
@@ -116,7 +116,7 @@ class Interface
 
   def route_set!
     puts 'Введите номер поезда:'
-    train = @trains[gets.chomp]
+    train = Train.trains[gets.chomp.to_s]
     puts 'Введите название маршрута:'
     route = @routes[gets.chomp]
     puts train && route ? "Поезду #{train.number} присвоен маршрут: #{train.route!(route)}" : 'Что-то пошло не так.Убедитесь в корректности ввода'
@@ -124,7 +124,7 @@ class Interface
 
   def carriage_ops!
     puts 'Введите номер поезда'
-    train = @trains[gets.chomp]
+    train = Train.trains[gets.chomp.to_s]
     puts <<~EOM
       Выберите действие:
       1)Прицепить вагон 
@@ -152,7 +152,7 @@ class Interface
 
   def train_move!
     puts 'Введите номер поезда'
-    train = @trains[gets.chomp]
+    train = Train.trains[gets.chomp.to_s]
     puts <<~EOM
       Выберите направление движения:
       1)Вперед по маршруту 
@@ -174,6 +174,6 @@ class Interface
   end
 
   def station_list
-    puts @stations ? "Список станций: #{@stations.keys}" : 'Станций не найдено'
+    puts Station.all.map {|st| st.title}.tap{|output| puts 'Станций не найдено' if output == []} 
   end
 end
