@@ -1,8 +1,15 @@
 class Route
   attr_reader :stations
+  @@routes = {}
+  
+  def self.all
+    @@routes
+  end
 
-  def initialize(first_station, last_station)
+  def initialize(name, first_station, last_station)
+    @name = name
     @stations = first_station, last_station
+    @@routes[name] = self
   end
 
   def insert(station)

@@ -22,7 +22,7 @@ class Train
   end
 
   def detach
-    @carriages.pop.attached = false if @speed.zero? && @carriages.length.positive?
+    @carriages.pop if @speed.zero?
   end
 
   def attach(carriage)

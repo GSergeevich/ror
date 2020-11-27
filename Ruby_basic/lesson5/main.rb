@@ -9,17 +9,13 @@ require_relative 'interface'
 #require_relative 'modules'
 
 # Seed
-stations = {}
-routes = {}
-#trains = {}
-
-stations['st1'] = Station.new('st1')
-stations['st3'] = Station.new('st3')
-stations['st5'] = Station.new('st5')
-routes['r1'] = Route.new(stations['st1'], stations['st5'])
+Station.new('st1')
+Station.new('st3')
+Station.new('st5')
+Route.new('r1', Station.all['st1'], Station.all['st5'])
 PassTrain.new(1)
 CargoTrain.new(2)
 Train.find(2).vendor = 'Cisco'
-p Station.all
+#
 
-Interface.new(stations, routes)
+Interface.new

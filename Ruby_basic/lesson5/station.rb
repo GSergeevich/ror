@@ -1,5 +1,5 @@
 class Station
-  @@all = []
+  @@all = {}
   attr_reader :title
   
   def self.all
@@ -9,7 +9,7 @@ class Station
   def initialize(title)
     @title = title
     @depot = { cargo: [], pass: [] }
-    @@all << self
+    @@all[@title] = self
   end
 
   def receive(train)

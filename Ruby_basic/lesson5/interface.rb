@@ -1,8 +1,6 @@
 class Interface
-  def initialize(stations = {}, routes = {}, trains = {})
-    @stations = stations
-    @routes = routes
-    @trains = trains
+  
+  def initialize
     puts 'Программа управления железной дорогой.'
     run
   end
@@ -64,7 +62,7 @@ class Interface
     when '1'
       puts 'Введите название станции:'
       title = gets.chomp
-      puts @stations[title] ? "Станция #{title} уже существует" : 'Станция ' + (@stations[title] = Station.new(title)).title + ' создана.'
+      puts Station.all[title] ? "Станция #{title} уже существует" : 'Станция ' + Station.new(title).title + ' создана.'
 
     when '2'
       puts 'Введите номер поезда:'
@@ -89,24 +87,23 @@ class Interface
     when '3'
       puts 'Введите название маршрута:'
       title = gets.chomp
-      if @routes[title]
+      if Route.all[title]
         puts "Маршрут #{title} уже существует."
       else
         puts 'Введите начальную станцию маршрута:'
-        first = @stations[gets.chomp]
+        first = Station.all[gets.chomp]  
         puts 'Введите конечную станцию маршрута:'
-        last = @stations[gets.chomp]
-        @routes[title] = Route.new(first, last)
-        puts "Маршрут #{title} создан."
+        last = Station.all[gets.chomp]
+        puts "Маршрут #{Route.new(title, first, last).title} создан."
       end
     end
   end
 
   def route_change!
     puts 'Введите название станции для операции с маршрутом:'
-    station = @stations[gets.chomp]
+    station = Station.all[gets.chomp]
     puts 'Введите название маршрута:'
-    route = @routes[gets.chomp]
+    route = Route.all[gets.chomp]
     if route.stations.include? station
       puts route.delete(station) ? "#{station.title} удалена из маршрута" : "#{station.title} является терминальной станцией маршрута,удаление невозможно"
     else
@@ -118,7 +115,7 @@ class Interface
     puts 'Введите номер поезда:'
     train = Train.trains[gets.chomp.to_s]
     puts 'Введите название маршрута:'
-    route = @routes[gets.chomp]
+    route = Route.all[gets.chomp]
     puts train && route ? "Поезду #{train.number} присвоен маршрут: #{train.route!(route)}" : 'Что-то пошло не так.Убедитесь в корректности ввода'
   end
 
@@ -169,11 +166,11 @@ class Interface
 
   def station_trains
     puts 'Введите название станции:'
-    station = @stations[gets.chomp]
+    station = Station.all[gets.chomp]
     puts station ? station.trains : 'Станции не существует'
   end
 
   def station_list
-    puts Station.all.map {|st| st.title}.tap{|output| puts 'Станций не найдено' if output == []} 
+    puts Station.all.keys.tap{|output| puts 'Станций не найдено' if output == []} 
   end
 end
