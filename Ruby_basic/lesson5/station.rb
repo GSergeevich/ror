@@ -1,4 +1,6 @@
 class Station
+  include InstanceCounter
+
   @@all = {}
   attr_reader :title
   
@@ -10,6 +12,7 @@ class Station
     @title = title
     @depot = { cargo: [], pass: [] }
     @@all[@title] = self
+    register_instance
   end
 
   def receive(train)

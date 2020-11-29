@@ -3,6 +3,7 @@ require_relative 'modules'
 class Train
   @@trains = {}
   include Vendor
+  include InstanceCounter
   attr_accessor :speed, :current_station
   attr_reader :number, :type, :route
 
@@ -19,6 +20,7 @@ class Train
     @speed = 0
     @carriages = []
     @@trains[@number] = self
+    register_instance
   end
 
   def detach

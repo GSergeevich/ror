@@ -1,4 +1,5 @@
 class Route
+  include InstanceCounter
   attr_reader :stations
   @@routes = {}
   
@@ -10,6 +11,7 @@ class Route
     @name = name
     @stations = first_station, last_station
     @@routes[name] = self
+    register_instance
   end
 
   def insert(station)

@@ -1,18 +1,20 @@
-module NS
+module InstanceCounter
   def self.included(base)
     base.extend ClassMethods
     base.include InstanceMethods
   end
 
   module ClassMethods
-    def debug(log)
-      puts "DEBUG: #{log}"
-    end
+    attr_accessor :instances
   end
 
   module InstanceMethods
-    def debug(log)
-      puts "DEBUG(instance: #{self}): #{log} "
+
+    private
+
+    def register_instance
+      self.class.instances ||= 0  
+      self.class.instances += 1
     end
   end
 end
