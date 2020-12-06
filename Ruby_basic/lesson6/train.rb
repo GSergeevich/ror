@@ -8,22 +8,22 @@ class Train
   attr_reader :number, :type, :route
 
   def self.find(number)
-    @@trains[number.to_s]  
+    @@trains[number.to_s]
   end
 
-  def self.validate_number(number) 
+  def self.validate_number(number)
     raise TrainTitleError if number !~ /\w{3}(-)*\w{2}/
     raise InstanceExistError if Train.find(number)
   end
 
   def self.validate_type(type)
-    raise InstanceTypeError if  type !~ /^[1-2]$/ 
+    raise InstanceTypeError if  type !~ /^[1-2]$/
   end
 
   def self.trains
     @@trains
-  end 
-  
+  end
+
   def initialize(number)
     @number = number.to_s
     @speed = 0

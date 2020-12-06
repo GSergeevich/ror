@@ -3,15 +3,15 @@ class Station
 
   @@all = {}
   attr_reader :title
-  
+
   def self.all
     @@all
   end
 
   def self.validate(title)
-    raise StationTitleError if title !~ /\w+/ 
-    raise InstanceExistError if @@all[title] 
-  end 
+    raise StationTitleError if title !~ /\w+/
+    raise InstanceExistError if @@all[title]
+  end
 
   def initialize(title)
     @title = title
@@ -19,10 +19,10 @@ class Station
     @@all[@title] = self
     register_instance
   end
-  
+
   def valid?(title)
-    self.validate title
-    true  
+    validate title
+    true
   rescue ArgumentError
     false
   end

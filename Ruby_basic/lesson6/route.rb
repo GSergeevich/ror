@@ -1,13 +1,14 @@
 class Route
   include InstanceCounter
   attr_reader :stations
+
   @@routes = {}
-  
+
   def self.all
     @@routes
   end
 
-  def self.validate(title) 
+  def self.validate(title)
     raise RouteTitleError if title !~ /\w+/
     raise InstanceExistError if @@routes[title]
   end

@@ -22,7 +22,7 @@ CargoTrain.new(5)
 CargoTrain.new(6)
 Train.new(111)
 Train.find(2).vendor = 'Cisco'
-#For checking
+# For checking
 binding.pry
 
 Interface.new
