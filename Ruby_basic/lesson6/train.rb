@@ -1,4 +1,5 @@
 require_relative 'modules'
+NUMBER_FORMAT = /\w{3}(-)*\w{2}$/
 
 class Train
   @@trains = {}
@@ -11,21 +12,13 @@ class Train
     @@trains[number.to_s]
   end
 
-  def self.validate_number(number)
-    raise TrainTitleError if number !~ /\w{3}(-)*\w{2}/
-    raise InstanceExistError if Train.find(number)
-  end
-
-  def self.validate_type(type)
-    raise InstanceTypeError if  type !~ /^[1-2]$/
-  end
-
   def self.trains
     @@trains
   end
 
   def initialize(number)
     @number = number.to_s
+    validate @number
     @speed = 0
     @carriages = []
     @@trains[@number] = self
@@ -80,15 +73,26 @@ class Train
     index = @route.stations.index(@current_station)
     @route.stations[index - 1]
   end
-end
 
-private
+  def valid?(number)
+    validate number
+    true
+  rescue RuntimeError
+    false
+  end
 
-# Вынес в private потому что эти методы не используются непосредственно в текстовом интерфейсе программы.
-def first_on_route?(station)
-  @route.stations.first == station
-end
+  private
 
-def last_on_route?(station)
-  @route.stations.last == station
+  def validate(number)
+    raise TrainTitleError if number !~ NUMBER_FORMAT
+    raise InstanceExistError if Train.find(number)
+  end
+
+  def first_on_route?(station)
+    @route.stations.first == station
+  end
+
+  def last_on_route?(station)
+    @route.stations.last == station
+  end
 end

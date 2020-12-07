@@ -1,6 +1,7 @@
 class Station
   include InstanceCounter
-
+  TITLE_FORMAT = /\w+$/
+  
   @@all = {}
   attr_reader :title
 
@@ -8,23 +9,12 @@ class Station
     @@all
   end
 
-  def self.validate(title)
-    raise StationTitleError if title !~ /\w+/
-    raise InstanceExistError if @@all[title]
-  end
-
   def initialize(title)
     @title = title
+    validate title
     @depot = { cargo: [], pass: [] }
     @@all[@title] = self
     register_instance
-  end
-
-  def valid?(title)
-    validate title
-    true
-  rescue ArgumentError
-    false
   end
 
   def receive(train)
@@ -47,4 +37,19 @@ class Station
     puts "Грузовых: #{@depot[:cargo].length}"
     puts "Пассажирских: #{@depot[:pass].length}"
   end
+
+  def valid?(title)
+    validate title
+    true
+  rescue RuntimeError
+    false
+  end
+
+protected  
+
+  def validate(title)
+    raise StationTitleError if title !~ TITLE_FORMAT
+    raise InstanceExistError if @@all[title]
+  end
+
 end

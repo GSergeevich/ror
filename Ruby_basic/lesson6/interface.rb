@@ -80,33 +80,31 @@ class Interface
   def create_station!
     puts 'Введите название станции:'
     title = gets.chomp
-    Station.validate title
     puts 'Станция ' + Station.new(title).title + ' создана.'
   end
 
   def create_train!
     puts 'Введите номер поезда:'
     number = gets.chomp
-    Train.validate_number number
     puts <<~EOM
         Введите тип поезда: 
         1)пассажирский
         2)грузовой
     EOM
     type = gets.chomp
-    Train.validate_type type
     case type
       when '1'
         puts "Поезд #{PassTrain.new(number).number} создан."
       when '2'
         puts "Поезд #{CargoTrain.new(number).number} создан."
+      else
+        raise InstanceTypeError
     end
   end
 
   def create_route!
     puts 'Введите название маршрута:'
     title = gets.chomp
-    Route.validate title
     puts 'Введите начальную станцию маршрута:'
     raise InstanceNotExistError unless first = Station.all[gets.chomp]  
     puts 'Введите конечную станцию маршрута:'
@@ -144,7 +142,6 @@ class Interface
       2)Отцепить вагон
     EOM
     input = gets.chomp
-    Train.validate_type input
     case input
     when '1'
       puts <<~EOM
@@ -158,9 +155,13 @@ class Interface
         puts train.attach(PassCarriage.new) ? 'Вагон прицеплен' : 'Операция не выполнена.Проверьте корректность ввода'
       when '2'
         puts train.attach(CargoCarriage.new) ? 'Вагон прицеплен' : 'Операция не выполнена.Проверьте корректность ввода'
+      else 
+        raise InstanceTypeError
       end
     when '2'
       puts train.detach ? 'Вагон отцеплен' : 'Операция не выполнена.Проверьте корректность ввода'
+    else
+        raise InstanceTypeError
     end
   end
 
@@ -173,12 +174,13 @@ class Interface
       2)Назад по маршруту
     EOM
     input = gets.chomp
-    raise InstanceTypeError if input !~ /^[1-2]$/
     case input
     when '1'
       puts train.route ? "Станция #{train.forward}" : 'Поезду не назначен маршрут'
     when '2'
       puts train.route ? "Станция #{train.backward}" : 'Поезду не назначен маршрут'
+    else
+      raise InstanceTypeError 
     end
   end
 
