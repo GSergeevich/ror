@@ -1,12 +1,12 @@
 require_relative 'modules'
-NUMBER_FORMAT = /\w{3}(-)*\w{2}$/
+NUMBER_FORMAT = /\w{3}(-)*\w{2}$/.freeze
 
 class Train
   @@all = {}
   include Vendor
   include InstanceCounter
   attr_accessor :speed, :current_station
-  attr_reader :number, :type, :route , :carriages
+  attr_reader :number, :type, :route, :carriages
 
   def self.find(number)
     @@all[number.to_s]

@@ -14,14 +14,14 @@ Station.new('st3')
 Station.new('st5')
 Route.new('r1', Station.all['st1'], Station.all['st5'])
 Route.new('r2', Station.all['st3'], Station.all['st5'])
-PassTrain.new(12345)
-PassTrain.new(23456)
-PassTrain.new(34567)
-CargoTrain.new(45678)
-CargoTrain.new(56789)
-CargoTrain.new(67900)
-Train.new(11123)
-Train.find(12345).vendor = 'Cisco'
+PassTrain.new(12_345)
+PassTrain.new(23_456)
+PassTrain.new(34_567)
+CargoTrain.new(45_678)
+CargoTrain.new(56_789)
+CargoTrain.new(67_900)
+Train.new(11_123)
+Train.find(12_345).vendor = 'Cisco'
 # For checking
 binding.pry
 

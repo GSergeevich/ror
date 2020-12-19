@@ -1,8 +1,7 @@
 require_relative 'carriage'
 
 class CargoCarriage < Carriage
-  attr_reader :type
-  attr_reader :occupied
+  attr_reader :type, :occupied
 
   def initialize(capacity)
     @capacity = capacity
@@ -11,11 +10,10 @@ class CargoCarriage < Carriage
   end
 
   def occupy!(number)
-  	@occupied + number <= @capacity ? @occupied += number : false
-  end 
-
-  def free?
-  	@capacity - @occupied
+    @occupied + number <= @capacity ? @occupied += number : false
   end
 
+  def free?
+    @capacity - @occupied
+  end
 end

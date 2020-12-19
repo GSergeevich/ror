@@ -1,7 +1,7 @@
 class Station
   include InstanceCounter
-  TITLE_FORMAT = /\w+$/
-  
+  TITLE_FORMAT = /\w+$/.freeze
+
   @@all = {}
   attr_reader :title
 
@@ -27,7 +27,7 @@ class Station
   end
 
   def trains
-    all_trains = @depot.values.reduce([]) { |arr,type| arr |= type }
+    all_trains = @depot.values.reduce([]) { |arr, type| arr |= type }
     all_trains.each do |train|
       yield train
     end
@@ -45,11 +45,10 @@ class Station
     false
   end
 
-protected  
+  protected
 
   def validate(title)
     raise StationTitleError if title !~ TITLE_FORMAT
     raise InstanceExistError if @@all[title]
   end
-
 end

@@ -11,11 +11,10 @@ class PassCarriage < Carriage
   end
 
   def occupy!
-  	@occupied < @seats ? @occupied += 1 : false
-  end 
+    @occupied < @seats ? @occupied += 1 : false
+  end
 
   def free?
-  	@seats - @occupied
+    @seats - @occupied
   end
-  
 end

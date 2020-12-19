@@ -1,7 +1,8 @@
 class Route
   include InstanceCounter
   attr_reader :stations
-  TITLE_FORMAT = /\w+/
+
+  TITLE_FORMAT = /\w+/.freeze
 
   @@routes = {}
 
@@ -38,5 +39,4 @@ class Route
     raise RouteTitleError if title !~ TITLE_FORMAT
     raise InstanceExistError if @@routes[title]
   end
-
 end
