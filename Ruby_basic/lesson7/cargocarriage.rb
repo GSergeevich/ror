@@ -7,5 +7,4 @@ class CargoCarriage < Carriage
     super(capacity)
     @type = 'cargo'
   end
-
 end
