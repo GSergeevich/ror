@@ -25,9 +25,9 @@ class Train
     register_instance
   end
 
-  def allcarriages
+  def allcarriages(&block)
     @carriages.each do |carriage|
-      yield carriage
+      block.call carriage
     end
   end
 
@@ -36,7 +36,12 @@ class Train
   end
 
   def attach(carriage)
-    @speed.zero? && carriage.type == type && !carriage.attached ? @carriages << carriage && carriage.attached = true : false
+    if @speed.zero? && carriage.type == type && !carriage.attached
+      carriage.attached = true
+      @carriages << carriage
+    else
+      false
+    end
   end
 
   def route!(route)

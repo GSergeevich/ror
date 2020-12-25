@@ -26,10 +26,10 @@ class Station
     @depot[train.type.to_sym].delete(train)
   end
 
-  def trains
-    all_trains = @depot.values.reduce([]) { |arr, type| arr |= type }
+  def trains(&block)
+    all_trains = @depot.values.reduce(&:+)
     all_trains.each do |train|
-      yield train
+      block.call train
     end
   end
 
