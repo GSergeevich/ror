@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Station
   include InstanceCounter
   TITLE_FORMAT = /\w+$/.freeze

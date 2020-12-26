@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'modules'
 NUMBER_FORMAT = /\w{3}(-)*\w{2}$/.freeze
 
