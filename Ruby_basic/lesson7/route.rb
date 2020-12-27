@@ -38,7 +38,7 @@ class Route
   private
 
   def validate(title)
-    raise RouteTitleError if title !~ TITLE_FORMAT
+    raise TitleError if title !~ TITLE_FORMAT
     raise InstanceExistError if @@routes[title]
   end
 end

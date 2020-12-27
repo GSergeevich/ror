@@ -50,7 +50,7 @@ class Station
   protected
 
   def validate(title)
-    raise StationTitleError if title !~ TITLE_FORMAT
+    raise TitleError if title !~ TITLE_FORMAT
     raise InstanceExistError if @@all[title]
   end
 end

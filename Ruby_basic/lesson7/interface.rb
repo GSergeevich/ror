@@ -3,8 +3,7 @@
 require_relative 'modules'
 
 class Interface
-
-  include InterfaceMethods 
+  include InterfaceMethods
 
   def initialize
     @meth = INTERFACE_METHODS
@@ -24,25 +23,21 @@ class Interface
         @meth[input.to_i] ? send(@meth[input.to_i][:meth]) : raise(InstanceTypeError)
       end
 
-      rescue TrainTitleError
-        puts 'Некорректный номер поезда,используйте формат: 3 цифры или буквы,опциональный дефис,2 буквы или цифры'
-        retry
-      rescue StationTitleError
-        puts 'Название станции некорректное,используйте не менее одной буквы или цифры'
-        retry
-      rescue RouteTitleError
-        puts 'Название  маршрута некорректное,используйте не менее одной буквы или цифры'
-        retry
-      rescue InstanceExistError
-        puts 'Объект уже существует'
-        retry
-      rescue InstanceNotExistError
-        puts 'Объекта не существует'
-        retry
-      rescue InstanceTypeError
-        puts 'Некорректный ввод, используйте цифры из предложенных вариантов'
-        retry 
+    rescue TrainTitleError
+      puts 'Некорректный номер поезда,используйте формат: 3 цифры или буквы,опциональный дефис,2 буквы или цифры'
+      retry
+    rescue TitleError
+      puts 'Название некорректное,используйте не менее одной буквы или цифры'
+      retry
+    rescue InstanceExistError
+      puts 'Объект уже существует'
+      retry
+    rescue InstanceNotExistError
+      puts 'Объекта не существует'
+      retry
+    rescue InstanceTypeError
+      puts 'Некорректный ввод, используйте цифры из предложенных вариантов'
+      retry
     end
   end
-
 end

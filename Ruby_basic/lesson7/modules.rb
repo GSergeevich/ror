@@ -44,11 +44,11 @@ module InterfaceMethods
   def create_train!
     puts 'Введите номер поезда:'
     number = gets.chomp
-    puts <<~EOM
+    puts <<~INPUT
       Введите тип поезда:
       1)пассажирский
       2)грузовой
-    EOM
+    INPUT
     type = gets.chomp
     case type
     when '1'
@@ -101,19 +101,19 @@ module InterfaceMethods
     puts 'Введите номер поезда'
     raise InstanceNotExistError unless (train = Train.all[gets.chomp.to_s])
 
-    puts <<~EOM
+    puts <<~INPUT
       Выберите действие:
       1)Прицепить вагон
       2)Отцепить вагон
-    EOM
+    INPUT
     input = gets.chomp
     case input
     when '1'
-      puts <<~EOM
+      puts <<~INPUT
         Введите тип вагона:
         1)пассажирский
         2)грузовой
-      EOM
+      INPUT
       input = gets.chomp
       case input
       when '1'
@@ -138,11 +138,11 @@ module InterfaceMethods
     puts 'Введите номер поезда'
     raise InstanceNotExistError unless (train = Train.all[gets.chomp.to_s])
 
-    puts <<~EOM
+    puts <<~INPUT
       Выберите направление движения:
       1)Вперед по маршруту
       2)Назад по маршруту
-    EOM
+    INPUT
     input = gets.chomp
     case input
     when '1'
@@ -199,10 +199,7 @@ end
 class TrainTitleError < RuntimeError
 end
 
-class StationTitleError < RuntimeError
-end
-
-class RouteTitleError < RuntimeError
+class TitleError < RuntimeError
 end
 
 class InstanceExistError < RuntimeError
