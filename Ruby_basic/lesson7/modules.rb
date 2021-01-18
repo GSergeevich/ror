@@ -20,6 +20,82 @@ module InstanceCounter
   end
 end
 
+module Accessors
+
+  def attr_accessor_with_history(*attrs)
+    attrs.each do |attr| 
+    #getter
+      self.class.define_method(attr.to_sym) do 
+        instance_variable_get("@#{attr}")
+      end
+
+    #getter
+      self.class.define_method("#{attr}_history".to_sym) do 
+        instance_variable_get("@#{attr}_history")
+      end
+
+    #setter
+      self.class.define_method("#{attr}=".to_sym) do |value|
+        instance_variable_set("@#{attr}".to_sym, value)
+        if instance_variable_get("@#{attr}_history")
+          instance_variable_get("@#{attr}_history").push(value)
+        else
+          instance_variable_set("@#{attr}_history", [value]) 
+        end
+      end
+    end
+
+  def strong_attr_accessor(attr_name,attr_class)
+    @attr_name = attr_name.to_s
+    @attr_class = attr_class.to_s
+    #getter
+    self.class.define_method(@attr_name.to_sym) do 
+      instance_variable_get("@#{@attr_name}")
+    end
+    #setter
+    self.class.define_method("#{@attr_name}=".to_sym) do |value|
+      value.class.to_s == "#{@attr_class}" ? instance_variable_set("@#{@attr_name}".to_sym, value) : raise("Несоответствие типа переменной")
+    end
+  end
+end
+end
+
+module Validation
+
+  def self.included(base)
+    base.extend ClassMethods
+    base.include InstanceMethods
+  end
+
+  module ClassMethods
+
+    def validate(entity,validation,*arg)
+      case validation
+        when :presence
+          name = entity.to_s
+          !(name.nil? || name == '')
+        when :format
+          name = entity.to_s
+          p name =~ arg[0]
+        when :type
+          entity.class.to_s == arg[0].to_s
+      end
+    end 
+  end
+
+  module InstanceMethods
+    def validate!(name:,regexp:,class_name:,object:)
+      self.class.validate(name,:presence) ? true : raise("Валидация 'presence' не пройдена")
+      self.class.validate(name,:format,regexp) ? true : raise("Валидация 'format' не пройдена")
+      self.class.validate(object,:type,class_name) ? true : raise("Валидация 'type' не пройдена")
+    end
+
+  end
+
+end
+
+
+
 module InterfaceMethods
   INTERFACE_METHODS = { 1 => { meth: 'create_station!', desc: 'Создать станцию' },
                         2 => { meth: 'create_train!', desc: 'Создать поезд' },
