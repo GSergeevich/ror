@@ -39,4 +39,15 @@ p my.v
 
 p my.class.validate "asd" , :format , /a*/
 my.validate! name: "asd" ,regexp: /a*/ ,class_name: Array , object: []
+p my.valid? name: "asd" ,regexp: /a*/ ,class_name: Array , object: []
+p my.valid? name: "asd" ,regexp: /a*/ ,class_name: Array , object: {}
+
+class Hey < My
+end
+
+hey = Hey.new
+p my.class.validate "asd" , :format , /a*/
+my.validate! name: "asd" ,regexp: /a*/ ,class_name: Array , object: []
+p my.valid? name: "asd" ,regexp: /a*/ ,class_name: Array , object: []
+p my.valid? name: "asd" ,regexp: /a*/ ,class_name: Array , object: {}
 

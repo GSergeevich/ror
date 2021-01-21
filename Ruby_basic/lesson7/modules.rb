@@ -76,7 +76,7 @@ module Validation
           !(name.nil? || name == '')
         when :format
           name = entity.to_s
-          p name =~ arg[0]
+          name =~ arg[0]
         when :type
           entity.class.to_s == arg[0].to_s
       end
@@ -88,6 +88,10 @@ module Validation
       self.class.validate(name,:presence) ? true : raise("Валидация 'presence' не пройдена")
       self.class.validate(name,:format,regexp) ? true : raise("Валидация 'format' не пройдена")
       self.class.validate(object,:type,class_name) ? true : raise("Валидация 'type' не пройдена")
+    end
+
+    def valid?(name:,regexp:,class_name:,object:)
+      self.class.validate(name,:presence) && self.class.validate(name,:format,regexp) && self.class.validate(object,:type,class_name)
     end
 
   end
