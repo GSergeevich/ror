@@ -1,17 +1,30 @@
 # frozen_string_literal: true
 
-require_relative 'modules'
+require './modules/accessors'
+require './modules/instance_counter'
+require './modules/validation'
+require './modules/errors'
+require './modules/vendor'
+require './modules/interface_methods'
+
 NUMBER_FORMAT = /\w{3}(-)*\w{2}$/.freeze
 
 class Train
   @@all = {}
   include Vendor
   include InstanceCounter
-  attr_accessor :speed, :current_station
+  include Validation
+  validate :number, :presense
+  validate :number, :format, NUMBER_FORMAT
+  validate :number, :type, Integer 
+
+  attr_accessor :speed, :current_station 
   attr_reader :number, :type, :route, :carriages
 
+
   def self.find(number)
-    @@all[number.to_s]
+  #  p @@all
+    @@all[number]
   end
 
   def self.all
@@ -19,8 +32,8 @@ class Train
   end
 
   def initialize(number)
-    @number = number.to_s
-    validate @number
+    @number = number
+    validate!
     @speed = 0
     @carriages = []
     @@all[@number] = self
@@ -87,19 +100,7 @@ class Train
     @route.stations[index - 1]
   end
 
-  def valid?(number)
-    validate number
-    true
-  rescue RuntimeError
-    false
-  end
-
   private
-
-  def validate(number)
-    raise TrainTitleError if number !~ NUMBER_FORMAT
-    raise InstanceExistError if Train.find(number)
-  end
 
   def first_on_route?(station)
     @route.stations.first == station

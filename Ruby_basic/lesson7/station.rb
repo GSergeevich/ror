@@ -1,5 +1,12 @@
 # frozen_string_literal: true
 
+require './modules/accessors'
+require './modules/instance_counter'
+require './modules/validation'
+require './modules/errors'
+require './modules/vendor'
+require './modules/interface_methods'
+
 class Station
   include InstanceCounter
   TITLE_FORMAT = /\w+$/.freeze

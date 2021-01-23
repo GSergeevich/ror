@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
-require_relative 'modules'
+require './modules/accessors'
+require './modules/instance_counter'
+require './modules/validation'
+require './modules/errors'
+require './modules/vendor'
+require './modules/interface_methods'
 
 class Carriage
   include Vendor

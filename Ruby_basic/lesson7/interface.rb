@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
-require_relative 'modules'
+require './modules/accessors'
+require './modules/instance_counter'
+require './modules/validation'
+require './modules/errors'
+require './modules/vendor'
+require './modules/interface_methods'
 
 class Interface
   include InterfaceMethods
@@ -14,20 +19,23 @@ class Interface
   def run
     loop do
       puts 'Выберите действие(введите номер),или 0 для выхода:'
-      @meth.each { |number, meth| puts "#{number}\) #{meth[:desc]}" }
+      @meth.each_with_index { |meth,index| puts "#{index + 1}\) #{meth[:desc]}" }
       input = gets.chomp
-      case input
+      case input 
       when '0'
         break
       else
-        @meth[input.to_i] ? send(@meth[input.to_i][:meth]) : raise(InstanceTypeError)
+        @meth[input.to_i - 1 ] ? send(@meth[input.to_i - 1][:meth]) : raise(InstanceTypeError)
       end
 
-    rescue TrainTitleError
-      puts 'Некорректный номер поезда,используйте формат: 3 цифры или буквы,опциональный дефис,2 буквы или цифры'
+    rescue TitleEmptyError
+      puts 'Используйте не менее одной буквы или цифры'
       retry
-    rescue TitleError
-      puts 'Название некорректное,используйте не менее одной буквы или цифры'
+    rescue TitleFormatError
+      puts "Некорректный формат.Для станции: #{Station::TITLE_FORMAT} ,для поезда: #{Train::NUMBER_FORMAT}"
+      retry
+    rescue TitleTypeError
+      puts 'Некорректный тип,используйте цифры для номеров поезда и вагонов,буквы для названия маршрутов и станций'
       retry
     rescue InstanceExistError
       puts 'Объект уже существует'
