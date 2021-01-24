@@ -9,7 +9,13 @@ require './modules/interface_methods'
 
 class Station
   include InstanceCounter
-  TITLE_FORMAT = /\w+$/.freeze
+  include Validation
+
+  TITLE_FORMAT = /[[:alnum:]]+$/.freeze
+
+  validate :title, :presence
+  validate :title, :format, TITLE_FORMAT
+  validate :title, :type, String
 
   @@all = {}
   attr_reader :title
@@ -20,7 +26,7 @@ class Station
 
   def initialize(title)
     @title = title
-    validate title
+    validate!
     @depot = { cargo: [], pass: [] }
     @@all[@title] = self
     register_instance
@@ -45,19 +51,5 @@ class Station
   def trains_number
     puts "Грузовых: #{@depot[:cargo].length}"
     puts "Пассажирских: #{@depot[:pass].length}"
-  end
-
-  def valid?(title)
-    validate title
-    true
-  rescue RuntimeError
-    false
-  end
-
-  protected
-
-  def validate(title)
-    raise TitleError if title !~ TITLE_FORMAT
-    raise InstanceExistError if @@all[title]
   end
 end

@@ -7,23 +7,21 @@ require './modules/errors'
 require './modules/vendor'
 require './modules/interface_methods'
 
-NUMBER_FORMAT = /\w{3}(-)*\w{2}$/.freeze
-
 class Train
+  NUMBER_FORMAT = /\w{3}(-)*\w{2}$/.freeze
+
   @@all = {}
   include Vendor
   include InstanceCounter
   include Validation
-  validate :number, :presense
+  validate :number, :presence
   validate :number, :format, NUMBER_FORMAT
-  validate :number, :type, Integer 
+  validate :number, :type, String
 
-  attr_accessor :speed, :current_station 
+  attr_accessor :speed, :current_station
   attr_reader :number, :type, :route, :carriages
 
-
   def self.find(number)
-  #  p @@all
     @@all[number]
   end
 

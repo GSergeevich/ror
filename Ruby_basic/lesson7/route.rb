@@ -2,10 +2,14 @@
 
 class Route
   include InstanceCounter
+  include Validation
   attr_reader :stations
 
-  TITLE_FORMAT = /\w+/.freeze
+  TITLE_FORMAT = /[[:alnum:]]+/.freeze
 
+  validate :name, :presence
+  validate :name, :format, TITLE_FORMAT
+  validate :name, :type, String
   @@routes = {}
 
   def self.all
@@ -13,8 +17,8 @@ class Route
   end
 
   def initialize(name, first_station, last_station)
-    validate name
     @name = name
+    validate!
     @stations = first_station, last_station
     @@routes[name] = self
     register_instance
@@ -26,19 +30,5 @@ class Route
 
   def delete(station)
     @stations.delete(station) if @stations[1...-1].include?(station)
-  end
-
-  def valid?(title)
-    validate title
-    true
-  rescue RuntimeError
-    false
-  end
-
-  private
-
-  def validate(title)
-    raise TitleError if title !~ TITLE_FORMAT
-    raise InstanceExistError if @@routes[title]
   end
 end

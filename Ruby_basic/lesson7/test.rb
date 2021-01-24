@@ -6,19 +6,19 @@ class My
   include Validation
 
   define_method :z do
-    "Zzzzzzzzz"
-    end
+    'Zzzzzzzzz'
+  end
 end
 
 my = My.new
 p my.methods
 puts my.z
-p "-------------"
-My.define_method(:x) {p "Xxxxxx"}
+p '-------------'
+My.define_method(:x) { p 'Xxxxxx' }
 p my.methods
 p my.x
 
-my.attr_accessor_with_history :a , :b , :c
+my.attr_accessor_with_history :a, :b, :c
 p my.methods
 p my.a
 my.a = 3
@@ -33,21 +33,20 @@ p my.b
 my.b = 5
 p my.b
 
-my.strong_attr_accessor :v , Array
-my.v = [1,2,3]
+my.strong_attr_accessor :v, Array
+my.v = [1, 2, 3]
 p my.v
 
-p my.class.validate "asd" , :format , /a*/
-my.validate! name: "asd" ,regexp: /a*/ ,class_name: Array , object: []
-p my.valid? name: "asd" ,regexp: /a*/ ,class_name: Array , object: []
-p my.valid? name: "asd" ,regexp: /a*/ ,class_name: Array , object: {}
+p my.class.validate 'asd', :format, /a*/
+my.validate! name: 'asd', regexp: /a*/, class_name: Array, object: []
+p my.valid? name: 'asd', regexp: /a*/, class_name: Array, object: []
+p my.valid? name: 'asd', regexp: /a*/, class_name: Array, object: {}
 
 class Hey < My
 end
 
 hey = Hey.new
-p my.class.validate "asd" , :format , /a*/
-my.validate! name: "asd" ,regexp: /a*/ ,class_name: Array , object: []
-p my.valid? name: "asd" ,regexp: /a*/ ,class_name: Array , object: []
-p my.valid? name: "asd" ,regexp: /a*/ ,class_name: Array , object: {}
-
+p my.class.validate 'asd', :format, /a*/
+my.validate! name: 'asd', regexp: /a*/, class_name: Array, object: []
+p my.valid? name: 'asd', regexp: /a*/, class_name: Array, object: []
+p my.valid? name: 'asd', regexp: /a*/, class_name: Array, object: {}

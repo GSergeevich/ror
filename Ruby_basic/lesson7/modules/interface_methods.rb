@@ -9,7 +9,7 @@ module InterfaceMethods
                        { meth: 'station_list', desc: 'Вывести список станций' },
                        { meth: 'station_trains', desc: 'Вывести список поездов на станции' },
                        { meth: 'trains_carriages', desc: 'Вывести список вагонов поезда' },
-                       { meth: 'fill_carriage!', desc: 'Заполнить вагон' }]
+                       { meth: 'fill_carriage!', desc: 'Заполнить вагон' }].freeze
 
   private
 

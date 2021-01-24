@@ -19,20 +19,20 @@ class Interface
   def run
     loop do
       puts 'Выберите действие(введите номер),или 0 для выхода:'
-      @meth.each_with_index { |meth,index| puts "#{index + 1}\) #{meth[:desc]}" }
+      @meth.each_with_index { |meth, index| puts "#{index + 1}\) #{meth[:desc]}" }
       input = gets.chomp
-      case input 
+      case input
       when '0'
         break
       else
-        @meth[input.to_i - 1 ] ? send(@meth[input.to_i - 1][:meth]) : raise(InstanceTypeError)
+        @meth[input.to_i - 1] ? send(@meth[input.to_i - 1][:meth]) : raise(InstanceTypeError)
       end
 
     rescue TitleEmptyError
       puts 'Используйте не менее одной буквы или цифры'
       retry
     rescue TitleFormatError
-      puts "Некорректный формат.Для станции: #{Station::TITLE_FORMAT} ,для поезда: #{Train::NUMBER_FORMAT}"
+      puts "Некорректный формат.Для станции: #{Station::TITLE_FORMAT} ,для поезда: #{Train::NUMBER_FORMAT}, для маршрута: #{Route::TITLE_FORMAT}"
       retry
     rescue TitleTypeError
       puts 'Некорректный тип,используйте цифры для номеров поезда и вагонов,буквы для названия маршрутов и станций'

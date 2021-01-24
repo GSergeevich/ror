@@ -18,10 +18,8 @@ module Validation
   module InstanceMethods
 
     def validate!
-      p self.class.instance_variable_get("@validations")
       validations = self.class.instance_variable_get("@validations")
       validations.each do |validation|
-        p validation
         name = eval("@#{validation[:entity].to_s}")
         case validation[:check]
           when :presence
@@ -29,7 +27,7 @@ module Validation
           when :format
             name.to_s =~ validation[:arguments][0] || (raise TitleFormatError.new("Валидация #{validation[:check]} не пройдена,"))  
           when :type
-            name.class.to_s == validation[:arguments][0].to_s || (raise TitleTypeError.new("Валидация #{validation[:check]} не пройдена")) 
+             name.class.to_s == validation[:arguments][0].to_s || (raise TitleTypeError.new("Валидация #{validation[:check]} не пройдена")) 
         end
         
       end

@@ -3,10 +3,10 @@
 require_relative 'train'
 
 class PassTrain < Train
-  validate :number, :presense
+  validate :number, :presence
   validate :number, :format, NUMBER_FORMAT
-  validate :number, :type, Integer 
-  
+  validate :number, :type, String
+
   def initialize(number)
     super
     @type = 'pass'
