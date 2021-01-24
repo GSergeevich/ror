@@ -28,14 +28,15 @@ class Interface
         @meth[input.to_i - 1] ? send(@meth[input.to_i - 1][:meth]) : raise(InstanceTypeError)
       end
 
-    rescue TitleEmptyError
-      puts 'Используйте не менее одной буквы или цифры'
+    rescue TitleEmptyError => e
+      puts e
       retry
-    rescue TitleFormatError
-      puts "Некорректный формат.Для станции: #{Station::TITLE_FORMAT} ,для поезда: #{Train::NUMBER_FORMAT}, для маршрута: #{Route::TITLE_FORMAT}"
+    rescue TitleFormatError => e
+      puts e
+      puts
       retry
-    rescue TitleTypeError
-      puts 'Некорректный тип,используйте цифры для номеров поезда и вагонов,буквы для названия маршрутов и станций'
+    rescue TitleTypeError => e
+      puts e
       retry
     rescue InstanceExistError
       puts 'Объект уже существует'

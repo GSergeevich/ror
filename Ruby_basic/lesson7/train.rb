@@ -68,7 +68,7 @@ class Train
     if last_on_route?(@current_station)
       "#{@current_station.title} последняя на маршруте"
     else
-      @current_station.send(self)
+      @current_station.send_train(self)
       @current_station = next_station.receive(self)
       @current_station.title
     end
@@ -78,7 +78,7 @@ class Train
     if first_on_route?(@current_station)
       "#{@current_station.title} первая на маршруте"
     else
-      @current_station.send(self)
+      @current_station.send_train(self)
       @current_station = prev_station.receive(self)
       @current_station.title
     end

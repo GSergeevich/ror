@@ -37,7 +37,7 @@ class Station
     self
   end
 
-  def send(train)
+  def send_train(train)
     @depot[train.type.to_sym].delete(train)
   end
 
