@@ -17,12 +17,12 @@ module Validation
     def validate!
       validations = self.class.validations
       validations.each do |validation|
-        send("validate_#{validation[:check]}", eval("@#{validation[:entity]}").to_s, (validation[:arguments][0]).to_s)
+        send("validate_#{validation[:check]}", eval("@#{validation[:entity]}"), (validation[:arguments][0]))
       end
     end
 
     def validate_presence(value, *_arg)
-      !(value.nil? || value == '') || (raise TitleEmptyError, 'Валидация presence не пройдена,название не может быть пустым.')
+      !(value.to_s.nil? || value.to_s == '') || (raise TitleEmptyError, 'Валидация presence не пройдена,название не может быть пустым.')
     end
 
     def validate_format(value, *arg)
